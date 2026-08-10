@@ -1,4 +1,8 @@
 import sharp from 'sharp';
+import fs from 'fs';
+import path from 'path';
+import { Resvg } from '@resvg/resvg-js';
+
 import { processImage } from './imageProcessing';
 import { getBuilderTitle } from './builderTitles';
 import { generatePassId } from './generatePassId';
@@ -545,9 +549,27 @@ export async function generateBuilderCard(input: {
    * ---------------------------------------------------------
    */
 
-  const png = await sharp(Buffer.from(svg))
-    .png()
-    .toBuffer();
+ const fontPath = path.join(
+  process.cwd(),
+  'fonts',
+  'DejaVuSans.ttf'
+);
+
+const font = fs.readFileSync(fontPath);
+
+const renderer = new Resvg(svg, {
+  font: {
+    fontBuffers: [font],
+    defaultFontFamily: 'DejaVu Sans',
+  },
+});
+
+const png = Buffer.from(renderer.render().asPng());
+
+return {
+  png,
+  passId,
+};
 
   return {
     png,
