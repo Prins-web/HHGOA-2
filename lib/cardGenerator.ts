@@ -1,7 +1,8 @@
 import sharp from 'sharp';
+import { Resvg } from '@resvg/resvg-js';
 import { processImage } from './imageProcessing';
 import { getBuilderTitle } from './builderTitles';
-import { getFontFaces } from './fonts';
+import { getFontFiles } from './fonts';
 import { generatePassId } from './generatePassId';
 
 export async function generateBuilderCard(input: {
@@ -62,7 +63,6 @@ export async function generateBuilderCard(input: {
 
   const svg = `
   <svg width="1080" height="1350" xmlns="http://www.w3.org/2000/svg">
-    <style>${getFontFaces()}</style>
     <rect width="1080" height="1350" fill="#063B2A"/>
     <rect x="36" y="36" width="1008" height="1278" rx="34" fill="#04251C" stroke="#f6e8c8" stroke-opacity="0.2" />
     <rect x="80" y="80" width="920" height="1190" rx="30" fill="none" stroke="#FFD83D" stroke-opacity="0.18" stroke-width="1" />
@@ -109,6 +109,16 @@ export async function generateBuilderCard(input: {
     <circle cx="1030" cy="1100" r="18" fill="none" stroke="#FFD83D" stroke-width="2" />
   </svg>`;
 
-  const image = await sharp(Buffer.from(svg)).flatten({ background: '#063B2A' }).jpeg({ quality: 88 }).toBuffer();
+  const rendered = new Resvg(svg, {
+    fitTo: { mode: 'width', value: 1080 },
+    font: {
+      fontFiles: getFontFiles(),
+      defaultFontFamily: 'OpenSans',
+    },
+  })
+    .render()
+    .asPng();
+
+  const image = await sharp(rendered).flatten({ background: '#063B2A' }).jpeg({ quality: 88 }).toBuffer();
   return { image, passId };
 }

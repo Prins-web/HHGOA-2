@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   experimental: {
-    serverComponentsExternalPackages: ['sharp', 'heic-convert'],
+    serverComponentsExternalPackages: ['sharp', 'heic-convert', '@resvg/resvg-js'],
     outputFileTracingIncludes: {
       '/api/generate': ['./fonts/**/*'],
     },
