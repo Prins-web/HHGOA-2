@@ -3,10 +3,9 @@
 import { useCallback, useMemo, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useDropzone } from 'react-dropzone';
-import BuilderCardPreview from '@/components/BuilderCardPreview';
 import BuilderForm from '@/components/BuilderForm';
 import GenerateButton from '@/components/GenerateButton';
-import MobilePreview from '@/components/MobilePreview';
+import HeroPassShowcase from '@/components/HeroPassShowcase';
 import PhotoPreview from '@/components/PhotoPreview';
 import ResultActions from '@/components/ResultActions';
 import UploadZone from '@/components/UploadZone';
@@ -86,7 +85,7 @@ export default function Home() {
     if (!generated) return;
     const link = document.createElement('a');
     link.href = generated;
-    link.download = `frame-in-goa-pass-${passId}.png`;
+    link.download = `frame-in-goa-pass-${passId}.jpg`;
     link.click();
   };
 
@@ -118,9 +117,7 @@ export default function Home() {
               <p className="mt-5 max-w-xl text-sm uppercase tracking-[0.3em] text-[#37E6D5]">Upload your photo · choose your stack · get your builder pass</p>
             </div>
             <div className="flex items-center justify-center">
-              <MobilePreview>
-                <BuilderCardPreview name={values.name} role={values.role} stack={values.stack} location={values.location} xHandle={values.xHandle} github={values.github} imageUrl={photoUrl} />
-              </MobilePreview>
+              <HeroPassShowcase />
             </div>
           </div>
         </section>

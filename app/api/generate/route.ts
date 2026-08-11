@@ -26,7 +26,7 @@ export async function POST(request: NextRequest) {
       photoFile: photo as File,
     });
 
-    const imageUrl = `data:image/png;base64,${result.png.toString('base64')}`;
+    const imageUrl = `data:image/jpeg;base64,${result.image.toString('base64')}`;
     return NextResponse.json({ imageUrl, passId: result.passId });
   } catch (error) {
     console.error(error);
