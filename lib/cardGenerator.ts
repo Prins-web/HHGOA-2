@@ -1,6 +1,7 @@
 import sharp from 'sharp';
 import { processImage } from './imageProcessing';
 import { getBuilderTitle } from './builderTitles';
+import { getFontFaces } from './fonts';
 import { generatePassId } from './generatePassId';
 
 export async function generateBuilderCard(input: {
@@ -61,6 +62,7 @@ export async function generateBuilderCard(input: {
 
   const svg = `
   <svg width="1080" height="1350" xmlns="http://www.w3.org/2000/svg">
+    <style>${getFontFaces()}</style>
     <rect width="1080" height="1350" fill="#063B2A"/>
     <rect x="36" y="36" width="1008" height="1278" rx="34" fill="#04251C" stroke="#f6e8c8" stroke-opacity="0.2" />
     <rect x="80" y="80" width="920" height="1190" rx="30" fill="none" stroke="#FFD83D" stroke-opacity="0.18" stroke-width="1" />
@@ -76,30 +78,30 @@ export async function generateBuilderCard(input: {
       <path d="M130 320h800" transform="translate(0 48)" />
       <path d="M130 320h800" transform="translate(0 72)" />
     </g>
-    <text x="95" y="168" font-family="Arial, Helvetica, sans-serif" font-size="42" letter-spacing="4" fill="#F6E8C8">HH</text>
-    <text x="95" y="214" font-family="Arial, Helvetica, sans-serif" font-size="18" letter-spacing="6" fill="#FFD83D">GOA 2026</text>
-    <text x="470" y="155" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="40" letter-spacing="8" fill="#F6E8C8">HACKER HOUSE</text>
-    <text x="470" y="205" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="28" letter-spacing="10" fill="#FFD83D">GOA</text>
+    <text x="95" y="168" font-family="OpenSans, sans-serif" font-size="42" letter-spacing="4" fill="#F6E8C8">HH</text>
+    <text x="95" y="214" font-family="OpenSans, sans-serif" font-size="18" letter-spacing="6" fill="#FFD83D">GOA 2026</text>
+    <text x="470" y="155" text-anchor="middle" font-family="OpenSans, sans-serif" font-size="40" letter-spacing="8" fill="#F6E8C8">HACKER HOUSE</text>
+    <text x="470" y="205" text-anchor="middle" font-family="OpenSans, sans-serif" font-size="28" letter-spacing="10" fill="#FFD83D">GOA</text>
     <rect x="910" y="118" width="78" height="78" rx="39" fill="none" stroke="#FFD83D" stroke-width="2" />
     <circle cx="949" cy="157" r="26" fill="none" stroke="#FF3D81" stroke-width="2" />
-    <text x="949" y="164" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="12" letter-spacing="2" fill="#F6E8C8">HH</text>
-    <text x="95" y="1180" font-family="Arial, Helvetica, sans-serif" font-size="16" letter-spacing="3" fill="#F6E8C8">#FRAMEINGOA</text>
-    <text x="540" y="1180" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="16" letter-spacing="3" fill="#F6E8C8">HACKER HOUSE GOA</text>
-    <text x="985" y="1180" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="16" letter-spacing="3" fill="#F6E8C8">28—31 OCT 2026</text>
-    <text x="95" y="1230" font-family="Arial, Helvetica, sans-serif" font-size="14" letter-spacing="2" fill="#F6E8C8">BUILT IN GOA · SHIPPED TO THE WORLD</text>
-    <text x="95" y="330" font-family="Arial, Helvetica, sans-serif" font-size="19" letter-spacing="4" fill="#FFD83D">PHOTO / BUILDER</text>
+    <text x="949" y="164" text-anchor="middle" font-family="OpenSans, sans-serif" font-size="12" letter-spacing="2" fill="#F6E8C8">HH</text>
+    <text x="95" y="1180" font-family="OpenSans, sans-serif" font-size="16" letter-spacing="3" fill="#F6E8C8">#FRAMEINGOA</text>
+    <text x="540" y="1180" text-anchor="middle" font-family="OpenSans, sans-serif" font-size="16" letter-spacing="3" fill="#F6E8C8">HACKER HOUSE GOA</text>
+    <text x="985" y="1180" text-anchor="end" font-family="OpenSans, sans-serif" font-size="16" letter-spacing="3" fill="#F6E8C8">28—31 OCT 2026</text>
+    <text x="95" y="1230" font-family="OpenSans, sans-serif" font-size="14" letter-spacing="2" fill="#F6E8C8">BUILT IN GOA · SHIPPED TO THE WORLD</text>
+    <text x="95" y="330" font-family="OpenSans, sans-serif" font-size="19" letter-spacing="4" fill="#FFD83D">PHOTO / BUILDER</text>
     <image href="data:image/jpeg;base64,${photoComposite.toString('base64')}" x="80" y="350" width="460" height="580" preserveAspectRatio="xMidYMid slice" />
-    <text x="590" y="388" font-family="Arial, Helvetica, sans-serif" font-size="54" font-weight="700" letter-spacing="3" fill="#F6E8C8">${(input.name || 'BUILDER').toUpperCase()}</text>
-    <text x="590" y="450" font-family="Arial, Helvetica, sans-serif" font-size="24" letter-spacing="3" fill="#FFD83D">${builderTitle}</text>
-    <text x="590" y="520" font-family="Arial, Helvetica, sans-serif" font-size="20" letter-spacing="2" fill="#F6E8C8">${(input.role || 'BUILDING THE FUTURE').toUpperCase()}</text>
-    <text x="590" y="560" font-family="Arial, Helvetica, sans-serif" font-size="20" letter-spacing="2" fill="#37E6D5">${(input.stack || 'FULL STACK · AI · WEB3').toUpperCase()}</text>
-    <text x="590" y="650" font-family="Arial, Helvetica, sans-serif" font-size="16" letter-spacing="2" fill="#F6E8C8">LOCATION</text>
-    <text x="590" y="682" font-family="Arial, Helvetica, sans-serif" font-size="18" fill="#F6E8C8">${(input.location || 'GOA, INDIA').toUpperCase()}</text>
-    ${input.xHandle ? `<text x="590" y="735" font-family="Arial, Helvetica, sans-serif" font-size="16" letter-spacing="2" fill="#F6E8C8">X</text><text x="640" y="735" font-family="Arial, Helvetica, sans-serif" font-size="18" fill="#F6E8C8">${input.xHandle.toUpperCase()}</text>` : ''}
-    ${input.github ? `<text x="590" y="790" font-family="Arial, Helvetica, sans-serif" font-size="16" letter-spacing="2" fill="#F6E8C8">GITHUB</text><text x="690" y="790" font-family="Arial, Helvetica, sans-serif" font-size="18" fill="#F6E8C8">${input.github.toUpperCase()}</text>` : ''}
+    <text x="590" y="388" font-family="OpenSans, sans-serif" font-size="54" font-weight="700" letter-spacing="3" fill="#F6E8C8">${(input.name || 'BUILDER').toUpperCase()}</text>
+    <text x="590" y="450" font-family="OpenSans, sans-serif" font-size="24" letter-spacing="3" fill="#FFD83D">${builderTitle}</text>
+    <text x="590" y="520" font-family="OpenSans, sans-serif" font-size="20" letter-spacing="2" fill="#F6E8C8">${(input.role || 'BUILDING THE FUTURE').toUpperCase()}</text>
+    <text x="590" y="560" font-family="OpenSans, sans-serif" font-size="20" letter-spacing="2" fill="#37E6D5">${(input.stack || 'FULL STACK · AI · WEB3').toUpperCase()}</text>
+    <text x="590" y="650" font-family="OpenSans, sans-serif" font-size="16" letter-spacing="2" fill="#F6E8C8">LOCATION</text>
+    <text x="590" y="682" font-family="OpenSans, sans-serif" font-size="18" fill="#F6E8C8">${(input.location || 'GOA, INDIA').toUpperCase()}</text>
+    ${input.xHandle ? `<text x="590" y="735" font-family="OpenSans, sans-serif" font-size="16" letter-spacing="2" fill="#F6E8C8">X</text><text x="640" y="735" font-family="OpenSans, sans-serif" font-size="18" fill="#F6E8C8">${input.xHandle.toUpperCase()}</text>` : ''}
+    ${input.github ? `<text x="590" y="790" font-family="OpenSans, sans-serif" font-size="16" letter-spacing="2" fill="#F6E8C8">GITHUB</text><text x="690" y="790" font-family="OpenSans, sans-serif" font-size="18" fill="#F6E8C8">${input.github.toUpperCase()}</text>` : ''}
     <rect x="590" y="910" width="390" height="92" rx="18" fill="#F6E8C8" fill-opacity="0.12" stroke="#FFD83D" stroke-opacity="0.24" />
-    <text x="610" y="955" font-family="Arial, Helvetica, sans-serif" font-size="16" letter-spacing="2" fill="#FFD83D">PASS ID · ${passId}</text>
-    <text x="610" y="980" font-family="Arial, Helvetica, sans-serif" font-size="14" letter-spacing="2" fill="#F6E8C8">BUILDERS ONLY · GOA 2026</text>
+    <text x="610" y="955" font-family="OpenSans, sans-serif" font-size="16" letter-spacing="2" fill="#FFD83D">PASS ID · ${passId}</text>
+    <text x="610" y="980" font-family="OpenSans, sans-serif" font-size="14" letter-spacing="2" fill="#F6E8C8">BUILDERS ONLY · GOA 2026</text>
     <rect x="590" y="1030" width="390" height="46" rx="6" fill="#f6e8c8" fill-opacity="0.14" />
     <rect x="610" y="1044" width="320" height="16" rx="2" fill="#37E6D5" fill-opacity="0.78" />
     <rect x="610" y="1068" width="280" height="4" rx="2" fill="#FF3D81" fill-opacity="0.7" />
